@@ -1,21 +1,24 @@
-#we can use dutch flag approach (3 pointers)
 class Solution(object):
     def sortColors(self, nums):
-        n = len(nums)
+      
+        a, b, c = 0, 0, 0
 
-        low = 0 #starting index for both,assuming the array is completely unsorted
-        mid = 0
-        end = n-1
+        
+        for i in nums:
+            if i == 0:
+                a += 1
+            elif i == 1:
+                b += 1
+            elif i == 2:
+                c += 1
 
-        while mid<=end:
-            if nums[mid] == 0:
-                nums[low], nums[mid] = nums[mid],nums[low]
-                low+=1
-                mid+=1
-            elif  nums[mid] == 1:
-                mid+=1
-            else:
-                nums[mid],nums[end] = nums[end],nums[mid]
-                end -=1
+        
+        for i in range(a):
+            nums[i] = 0
+        for i in range(a, a + b):
+            nums[i] = 1
+        for i in range(a + b, a + b + c):
+            nums[i] = 2
 
         return nums
+
