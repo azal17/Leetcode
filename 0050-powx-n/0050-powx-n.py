@@ -1,12 +1,16 @@
 class Solution:
     def myPow(self, x: float, n: int) -> float:
-        if n == 0:
-            return 1
-        if n < 0:
-            x = 1 / x
-            n = -n
-        if n % 2 == 0:
-            half = self.myPow(x, n // 2)
-            return half * half
-        else:
-            return x * self.myPow(x, n - 1)
+        result = 1
+        new = n
+        if new <0:
+            new = -1*n
+        while new:
+            if new%2: #true for odd , 0 for even
+                result = result * x
+                new = new -1 
+            else:
+                x = x*x
+                new = new//2
+        if n<0:
+            result = 1.0/result
+        return result
