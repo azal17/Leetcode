@@ -23,4 +23,3 @@ class Solution:
     def reversePairs(self, nums: List[int]) -> int:
         return self.mergeSort(nums, 0, len(nums) - 1)
 
-
