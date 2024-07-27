@@ -5,24 +5,24 @@ class ListNode(object):
 
 class Solution(object):
     def removeNthFromEnd(self, head, n):
+        fast = head
+        slow = head
+
+        for _ in range(n):
+            if fast is None:  
+                return head
+            fast = fast.next
+
+       
+        if fast is None:
+            return head.next 
+
         
-        dummy = ListNode(0)
-        dummy.next = head
-        q = dummy
-        count = 0
+        while fast.next is not None:
+            fast = fast.next
+            slow = slow.next #at total -n
 
-        while q.next is not None:
-            count +=1
-            q = q.next
-        
-        actual_node_position = count - n
-        q = dummy
+       
+        slow.next = slow.next.next
 
-        for _ in range(actual_node_position):
-            q = q.next
-        
-        q.next = q.next.next
-
-        return dummy.next
-
-
+        return head
