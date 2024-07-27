@@ -1,4 +1,4 @@
-# Definition for singly-linked list.
+#Tortoise and Hare algorithm.
 class ListNode(object):
     def __init__(self, val=0, next=None):
         self.val = val
@@ -6,24 +6,10 @@ class ListNode(object):
 
 class Solution(object):
     def middleNode(self, head):
-        if head is None or head.next is None:
-            return head
+        slow = head
+        fast = head
 
-        temp = head
-        count = 0
-
-        
-        while temp is not None:
-            count += 1
-            temp = temp.next
-
-      
-        mid = count // 2
-        temp = head
-
-       
-        for _ in range(mid):
-            temp = temp.next
-
-       
-        return temp
+        while fast and fast.next and slow:
+            fast = fast.next.next
+            slow = slow.next
+        return slow
