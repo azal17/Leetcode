@@ -1,7 +1,7 @@
 class Solution:
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()  
-        result = []
+        nums.sort()
+   
         s = set()
 
         def sub(k: int, current: List[int]): 
@@ -19,5 +19,5 @@ class Solution:
         sub(0, [])
         
        
-        result = [list(t) for t in s]
-        return result
+      
+        return s
