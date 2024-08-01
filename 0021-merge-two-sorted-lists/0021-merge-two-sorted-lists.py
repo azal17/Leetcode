@@ -1,35 +1,32 @@
 # Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution:
-    def convert(self, a):
-        n = len(a)
-        dummy_node = ListNode(-1)
-        temp = dummy_node
-
-        for i in range(n):
-            temp.next = ListNode(a[i])
-            temp = temp.next 
-        
-        return dummy_node.next #  head 
-
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        temp_array = []
-        p = list1
-        q = list2
+        t1 = list1
+        t2 = list2
 
-        while p is not None:
-            temp_array.append(p.val)
-            p = p.next
-        
-        while q is not None:
-            temp_array.append(q.val)
-            q = q.next
-        
-        temp_array.sort()
+        dummy = ListNode(-1)
+        temp = dummy
+        while t1 is not None and t2 is not None:
+            if t1.val < t2.val:
+                temp.next = t1
+                t1 = t1.next
+                
+            else:
+                temp.next = t2
+                t2 = t2.next
+            temp = temp.next
+        if t1 is not None:
+            temp.next = t1
+        if t2 is not None:
+            temp.next = t2
 
-        head = self.convert(temp_array)
-        return head
+        return dummy.next
+        
+
+
+
+        
