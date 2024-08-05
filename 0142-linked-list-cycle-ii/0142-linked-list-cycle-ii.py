@@ -9,7 +9,7 @@ class Solution:
         slow = head
         fast = head
         
-        # Step 1: Detect if there is a cycle
+     
         while fast is not None and fast.next is not None:
             slow = slow.next
             fast = fast.next.next
