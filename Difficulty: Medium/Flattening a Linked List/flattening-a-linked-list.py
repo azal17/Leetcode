@@ -1,51 +1,50 @@
 #User function Template for python3
 
 
+'''
 
 class Node:
-    def __init__(self, data=None, next=None, bottom=None):
-        self.data = data
-        self.next = next
-        self.bottom = bottom
+    def __init__(self, d):
+        self.data=d
+        self.next=None
+        self.bottom=None
+        
+'''
 
 class Solution:
-    def flatten(self, root: Node) -> Node:
-        if not root:
-            return None
+    def merge(self, list1, list2):
+        dummyNode = Node(-1)
+        temp = dummyNode
         
-       
-        nodes = []
-        temp = root
-        while temp:
-            current = temp
-            while current:
-                nodes.append(current)
-                current = current.bottom
-            temp = temp.next
+        while list1 and list2:
+            if list1.data < list2.data:
+                temp.bottom = list1
+                temp = list1
+                list1 = list1.bottom
+            else:
+                temp.bottom = list2
+                temp = list2
+                list2 = list2.bottom
+            temp.next = None
         
-     
-        nodes.sort(key=lambda x: x.data)
+        if list1:
+            temp.bottom = list1
+        else:
+            temp.bottom = list2
         
-        if not nodes:
-            return None
-        
-      
-        head = nodes[0]
-        temp = head
-        
-        for node in nodes[1:]:
-            temp.bottom = node
-            temp = temp.bottom
-       
-        if temp:
-            temp.bottom = None
-        
-        return head
-
+        if dummyNode.bottom:
+            dummyNode.bottom.next = None
+        return dummyNode.bottom
                 
+    def flatten(self, root):
+        if root == None or root.next == None:
+            return root
     
-            
-      
+        root.next = self.flatten(root.next)
+        root = self.merge(root, root.next)
+        
+        return root
+
 
 
 #{ 
