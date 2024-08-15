@@ -1,3 +1,4 @@
+# Time complexity : O(n^2) -> nested loop
 class Solution:
     def trap(self, height: List[int]) -> int:
         n = len(height)
