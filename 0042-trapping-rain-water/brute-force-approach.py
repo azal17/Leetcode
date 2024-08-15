@@ -1,4 +1,4 @@
-# Time complexity : O(n^2) -> nested loop
+# Time complexity : O(n^2) -> nested loop , Space Complexity = O(1) -> no additional space
 class Solution:
     def trap(self, height: List[int]) -> int:
         n = len(height)
