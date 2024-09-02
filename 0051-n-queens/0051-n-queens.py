@@ -1,46 +1,29 @@
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
-        def isSafe(row: int, col: int, board:  List[List[str]]):
-            for i in range(col):
-                if board[row][i] =='Q':
-                    return False
-
-            i,j = row, col
-            while i>= 0 and j>= 0:
-                if board[i][j] =='Q':
-                    return False
-                i -= 1
-                j -= 1
-            
-            i,j = row, col
-            while i < n and j>= 0:
-                if board[i][j] =='Q':
-                    return False
-                i += 1
-                j -= 1
-
-            return True
-            
-                
-
-
-        def boardCreation(n: int):
-            return [['.'] * n for _ in range(n)]
-        def helper(col: int, board: List[List[str]]):
+        def solve(col: int, board: List[str], ans: List[List[str]], leftrow: List[int], upperDiagonal: List[int], lowerDiagonal: List[int], n: int):
             if col == n:
-                solution = [''.join(board[i]) for i in range(n)] # all solutions
-                result.append(solution)
-
+                ans.append(board[:])
+                return
+            
             for row in range(n):
-                if isSafe(row,col,board):
-                    board[row][col] = 'Q'
-                    helper(col+1, board)
-                    board[row][col] = '.'
-
-
-
-        result = []
-        board = boardCreation(n)
-        helper(0, board)
-        return result
+                if leftrow[row] == 0 and lowerDiagonal[row+col] == 0 and upperDiagonal[n-1+col-row] == 0:
+ 
+                    board[row] = board[row][:col] + 'Q' + board[row][col+1:]
+                    leftrow[row] = 1
+                    lowerDiagonal[row+col] = 1
+                    upperDiagonal[n-1+col-row] = 1
+                    solve(col + 1, board, ans, leftrow, upperDiagonal, lowerDiagonal, n)
+                    board[row] = board[row][:col] + '.' + board[row][col+1:]
+                    leftrow[row] = 0
+                    lowerDiagonal[row+col] = 0
+                    upperDiagonal[n-1+col-row] = 0
         
+       
+        board = ['.' * n for _ in range(n)]
+        ans = []
+        leftrow = [0] * n  
+        lowerDiagonal = [0] * (2 * n - 1)  
+        upperDiagonal = [0] * (2 * n - 1)  
+        solve(0, board, ans, leftrow, upperDiagonal, lowerDiagonal, n)
+        
+        return ans
