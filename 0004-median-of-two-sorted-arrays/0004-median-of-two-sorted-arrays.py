@@ -4,24 +4,27 @@ class Solution:
         n = len(nums1)
         m = len(nums2)
 
-        result = []
-        i, j = 0, 0
- 
-        while i < n and j < m:
-            if nums1[i] < nums2[j]:
-                result.append(nums1[i])
-                i += 1
-            else:
-                result.append(nums2[j])
-                j += 1
-        if i < n:
-            result.extend(nums1[i:])
-        if j < m:
-            result.extend(nums2[j:])
+        nums1.extend([0] * m)
+        
+        i, j, k = n - 1, m - 1, n + m - 1
 
-        length = len(result)
-        if length % 2 == 1:  
-            return result[length // 2]
+        while i >= 0 and j >= 0:
+            if nums1[i] > nums2[j]:
+                nums1[k] = nums1[i]
+                i -= 1
+            else:
+                nums1[k] = nums2[j]
+                j -= 1
+            k -= 1
+ 
+        while j >= 0:
+            nums1[k] = nums2[j]
+            j -= 1
+            k -= 1
+
+        length = n + m
+        if length % 2 == 1: 
+            return nums1[length // 2]
         else:  
             mid = length // 2
-            return (result[mid - 1] + result[mid]) / 2.0
+            return (nums1[mid - 1] + nums1[mid]) / 2.0
