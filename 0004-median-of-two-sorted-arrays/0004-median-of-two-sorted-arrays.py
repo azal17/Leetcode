@@ -1,30 +1,47 @@
-
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
         n = len(nums1)
         m = len(nums2)
+        k  = n + m
 
-        nums1.extend([0] * m)
-        
-        i, j, k = n - 1, m - 1, n + m - 1
+        index2 = k // 2
+        index1 = index2 - 1
+        cnt = 0
+        index1_element, index2_element = -1, -1
 
-        while i >= 0 and j >= 0:
-            if nums1[i] > nums2[j]:
-                nums1[k] = nums1[i]
-                i -= 1
+        i, j = 0, 0
+        while i < n and j < m:
+            if nums1[i] < nums2[j]:
+                if cnt == index1:
+                    index1_element = nums1[i]
+                if cnt == index2:
+                    index2_element = nums1[i]
+                cnt += 1
+                i += 1
             else:
-                nums1[k] = nums2[j]
-                j -= 1
-            k -= 1
- 
-        while j >= 0:
-            nums1[k] = nums2[j]
-            j -= 1
-            k -= 1
+                if cnt == index1:
+                    index1_element = nums2[j]
+                if cnt == index2:
+                    index2_element = nums2[j]
+                cnt += 1
+                j += 1
 
-        length = n + m
-        if length % 2 == 1: 
-            return nums1[length // 2]
-        else:  
-            mid = length // 2
-            return (nums1[mid - 1] + nums1[mid]) / 2.0
+        while i < n:
+            if cnt == index1:
+                index1_element = nums1[i]
+            if cnt == index2:
+                index2_element = nums1[i]
+            cnt += 1
+            i += 1
+
+        while j < m:
+            if cnt == index1:
+                index1_element = nums2[j]
+            if cnt == index2:
+                index2_element = nums2[j]
+            cnt += 1
+            j += 1
+
+        if k % 2 == 1:
+            return index2_element
+        return (index1_element + index2_element) / 2.0
