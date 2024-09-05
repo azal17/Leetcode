@@ -1,3 +1,4 @@
+# T.C =O(m+n) , S.C = O(1)
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
         n, m = len(nums1), len(nums2)
