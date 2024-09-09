@@ -1,33 +1,31 @@
 #User function Template for python3
 
 class Solution:
-    def kthElement(self, z, arr1, arr2):
-        n = len(arr1)
-        m = len(arr2)
-        
-        arr1.extend([0] * m)
-  
-        i, j, k = n - 1, m - 1, n + m - 1
+    def kthElement(self, k, arr1, arr2):
+        n, m = len(arr1), len(arr2)
+        if n > m:
+            return self.kthElement(k, arr2, arr1)
 
-        while i >= 0 and j >= 0:
-            if arr1[i] > arr2[j]:
-                arr1[k] = arr1[i]
-                i -= 1
+        low, high = max(0, k - m), min(k, n)
+        
+        while low <= high:
+            mid1 = (low + high) // 2
+            mid2 = k - mid1  
+            l1 = arr1[mid1 - 1] if mid1 > 0 else float('-inf')
+            r1 = arr1[mid1] if mid1 < n else float('inf')
+            l2 = arr2[mid2 - 1] if mid2 > 0 else float('-inf')
+            r2 = arr2[mid2] if mid2 < m else float('inf')
+
+            if l1 <= r2 and l2 <= r1:
+                return max(l1, l2)
+            elif l1 > r2:
+                high = mid1 - 1 
             else:
-                arr1[k] = arr2[j]
-                j -= 1
-            k -= 1
+                low = mid1 + 1  
 
-        while j >= 0:
-            arr1[k] = arr2[j]
-            j -= 1
-            k -= 1
+        return 0  
+
             
-        while arr1[-1] == 0 and len(arr1) > m+n:
-            nums1.pop() 
-        return arr1[z-1]
-
-        
         
         
         
