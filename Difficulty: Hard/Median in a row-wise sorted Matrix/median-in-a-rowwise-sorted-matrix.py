@@ -1,18 +1,48 @@
 #User function Template for python3
-
+# nested binary search
 class Solution:
+    def upp(self, arr, x, n):
+        low, high, ans = 0, n - 1, n
+        
+        while low <= high:
+            mid = (low + high) // 2
+            
+            if arr[mid] <= x:
+                low = mid + 1
+            else:
+                ans = mid
+                high = mid - 1
+        
+        return ans
+
+    def coun(self, matrix, m, n, x):
+        cnt = 0
+        for i in range(m):
+            cnt += self.upp(matrix[i], x, n)
+        return cnt
+    
     def median(self, matrix, R, C):
-        a = []
+        left = float('inf')
+        right = float('-inf')
+        
         for i in range(R):
-            for j in range(C):
-                a.append(matrix[i][j])
-        a.sort()
-        k = len(a)
-        m = k//2
-        if k%2 == 1:
-            return a[m]
-        else:
-            return (a[m-1] + a[m]) //2
+            left = min(left, matrix[i][0])
+            right = max(right, matrix[i][C - 1])
+        
+        req = (R * C) // 2
+        while left <= right:
+            mid = (left + right) // 2
+            smallEqual = self.coun(matrix, R, C, mid)
+            
+            if smallEqual <= req:
+                left = mid + 1
+            else:
+                right = mid - 1
+        
+        return left
+
+        
+        
                 
     	#code here 
 
