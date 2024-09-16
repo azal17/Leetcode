@@ -12,15 +12,17 @@ class Solution:
         if not node:
             return None
         
-        mpp = {}
-        def dfs(node):
-            if node in mpp:
-                return mpp[node]
-            
-            mpp[node] = Node(node.val)
-            
-            for neighbor in node.neighbors:
-                mpp[node].neighbors.append(dfs(neighbor))
-            
-            return mpp[node]
-        return dfs(node)
+        mpp = {}  
+        queue = Queue() 
+        queue.put(node)  
+        mpp[node] = Node(node.val) 
+        while not queue.empty():
+            n = queue.get()  
+
+            for neigh in n.neighbors: 
+                if neigh not in mpp:
+                    mpp[neigh] = Node(neigh.val)  
+                    queue.put(neigh)  
+                mpp[n].neighbors.append(mpp[neigh])  
+        
+        return mpp[node]
