@@ -1,21 +1,27 @@
+#User function Template for python3
 
 class Solution:
     
+    # Function to return a list containing the DFS traversal of the graph.
     def dfsOfGraph(self, V, adj):
-        dfs_traversal = []
+       
+        stack = [0]
         visited = set()
-    
-        def dfs(v):
-            visited.add(v)
-            dfs_traversal.append(v)
-            for neighbor in adj[v]:
-                if neighbor not in visited:
-                    dfs(neighbor)
-
-        dfs(0)
+        result = []
         
-        return dfs_traversal
-
+        while stack:
+            node = stack.pop()
+            
+           
+            if node not in visited:
+                result.append(node)  
+                visited.add(node)
+                
+                for neighbor in reversed(adj[node]):
+                    if neighbor not in visited:
+                        stack.append(neighbor)
+        
+        return result
 
 
 #{ 
