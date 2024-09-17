@@ -1,27 +1,37 @@
+from queue import Queue
+
 class Solution:
-    
-    #Function to return list containing vertices in Topological order.
+  
     def topoSort(self, V, adj):
-        def dfs(node, visited,stack):
-            visited.add(node)
-            
-            for n in adj[node]:
-                if n not in visited:
-                    dfs(n,visited,stack)
-            stack.append(node)
-            
-            
-            
+        queue = Queue()     
+        result = []          
+        indegree = [0] * V   
+        
+        for i in range(V):
+            for neighbor in adj[i]:
+                indegree[neighbor] += 1  
+        
+ 
+        for i in range(V):
+            if indegree[i] == 0:
+                queue.put(i)
+
+        while not queue.empty():
+            node = queue.get()
+            result.append(node)
+
+            for neighbor in adj[node]:
+                indegree[neighbor] -= 1
+
+                if indegree[neighbor] == 0:
+                    queue.put(neighbor)
+        
+        return result
+
             
             
         
-        visited = set()
-        stack = []
-        for i in range(V):
-            if i not in visited:
-                dfs(i,visited,stack)
-        # Code here
-        return stack[::-1]
+        
 
 
 
