@@ -2,26 +2,33 @@ from queue import Queue
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
         m, n = len(grid), len(grid[0])
+        q = Queue()
+        
         fresh = 0
-        directions = [(-1,0), (1,0), (0,-1), (0,1)]
-        queue = Queue()
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         
         for i in range(m):
             for j in range(n):
                 if grid[i][j] == 1:
                     fresh += 1
                 elif grid[i][j] == 2:
-                    queue.put((i, j, 0))
+                    q.put((i, j))
         
-        maxx = 0
-        while not queue.empty():
-            row, col, time = queue.get()
-            for dr, dc in directions:
-                new_row, new_col = row + dr, col + dc
-                if 0 <= new_row < m and 0 <= new_col < n and grid[new_row][new_col] == 1:
-                    grid[new_row][new_col] = 2
-                    fresh -= 1
-                    queue.put((new_row, new_col, time + 1))
-                    maxx = time + 1
-        
-        return maxx if fresh == 0 else -1
+        count = 0
+        while not q.empty():
+            size = q.qsize()
+            for _ in range(size):
+                row, col = q.get()
+                for r, c in directions:
+                    rn, rc = row + r, col + c
+                    if 0 <= rn < m and 0 <= rc < n and grid[rn][rc] == 1:
+                        grid[rn][rc] = 2
+                        fresh -= 1
+                        q.put((rn, rc))
+            count += 1
+        if fresh == 0 and count != 0:
+            return count -1
+        elif fresh == 0 and count == 0:
+            return 0
+        elif fresh != 0:
+            return -1
