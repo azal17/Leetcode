@@ -1,24 +1,24 @@
-from typing import List, Tuple
-import heapq
-class Solution:
+from typing import List
 
-    #Function to find the shortest distance of all the vertices
-    #from the source vertex S.
-    def dijkstra(self, V: int, adj: List[List[Tuple[int, int]]], S: int) -> List[int]:
-        min_heap = []
-        distance_array = [float('inf')] * V
-        distance_array[S] = 0
-        heapq.heappush(min_heap, (0, S))
+class Solution:
+    # Function to find the shortest distance of all the vertices
+    # from the source vertex S.
+    def dijkstra(self, V: int, adj: List[List[int]], S: int) -> List[int]:
         
-        while min_heap:
-            current_distance, node = heapq.heappop(min_heap)
-            for neighbor, neighbor_distance in adj[node]:
-                new_distance = current_distance + neighbor_distance
+        distance_array = [float('inf')] * V
+        distance_array[S] = 0  
+        s = {(0, S)}  
+
+        while s:
+            wt, node = min(s) 
+            s.remove((wt, node))  
+            for neighbor, weight in adj[node]:
+                new_distance = wt + weight
                 if new_distance < distance_array[neighbor]:
                     distance_array[neighbor] = new_distance
-                    heapq.heappush(min_heap, (new_distance, neighbor))
+                    s.add((new_distance, neighbor))  
         return distance_array
-  
+
 
 
 #{ 
