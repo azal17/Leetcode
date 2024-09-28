@@ -7,7 +7,8 @@ class Solution:
         
         distance_array = [float('inf')] * V
         distance_array[S] = 0  
-        s = {(0, S)}  
+        s = set()
+        s.add((0,S))
 
         while s:
             wt, node = min(s) 
