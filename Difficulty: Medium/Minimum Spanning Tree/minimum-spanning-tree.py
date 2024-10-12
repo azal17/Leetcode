@@ -1,30 +1,66 @@
 #User function Template for python3
-import heapq
 from typing import List
+class DisjointSet:
+    def __init__(self, n: int):
+        self.rank = [0] * (n + 1)  
+        self.parent = [i for i in range(n + 1)]  
+        self.size = [1]*(n+1)
+
+
+    def find(self, node: int) -> int:
+        if node != self.parent[node]:  
+            self.parent[node] = self.find(self.parent[node])  
+        return self.parent[node]
+
+    def unionByRank(self, u: int, v: int):
+        ultParentU = self.find(u)
+        ultParentV = self.find(v)
+
+        if ultParentU == ultParentV:
+            return 
+        if self.rank[ultParentU] < self.rank[ultParentV]:
+            self.parent[ultParentU] = ultParentV
+        elif self.rank[ultParentU] > self.rank[ultParentV]:
+            self.parent[ultParentV] = ultParentU
+        else:
+            self.parent[ultParentV] = ultParentU
+            self.rank[ultParentU] += 1  
+    def unionBySize(self,u: int,v: int):
+        ultParentU = self.find(u)
+        ultParentV = self.find(v)
+
+        if ultParentU == ultParentV:
+            return  
+        if self.size[ultParentU] < self.size[ultParentV]:
+            self.parent[ultParentU] = ultParentV
+            self.size[ultParentV] +=  self.size[ultParentU] 
+        else:
+           self.parent[ultParentV] = ultParentU
+           self.size[ultParentU] +=  self.size[ultParentV] 
+
+
 class Solution:
     
     #Function to find sum of weights of edges of the Minimum Spanning Tree.
     def spanningTree(self, V: int, adj: List[List[int]]) -> int:
-        #code here
-        vis = [False]*V
-        mst = []
-        min_heap = []
         
-        heapq.heappush(min_heap, (0 ,0 ,-1 ))
-        sum = 0
-        while min_heap:
-            wt, node, parent =  heapq.heappop(min_heap)
-            if vis[node]:
-                continue
-            vis[node] = True
-            if parent != -1:
-                sum += wt
+        #code here
+        edges = []
+        for node in range(V):
+            for neigh, weight in adj[node]:
+                edges.append((weight, node, neigh))
+        ds = DisjointSet(V)
+        edges.sort()
+        summ = 0
+        
+        for wt, node, neigh in edges:
+            if ds.find(node) != ds.find(neigh):
+                summ += wt
+                ds.unionBySize(node, neigh)
                 
-            for neigh, edge_wt in adj[node]:
-                 heapq.heappush(min_heap, (edge_wt ,neigh , node ))
-        return sum
-                 
-
+        return summ
+            
+            
 
 #{ 
  # Driver Code Starts
