@@ -8,20 +8,24 @@ class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         cur = root
         array = []
-        while cur :
-            if cur.left is None:
+
+        while cur:
+            if cur.left == None:
                 array.append(cur.val)
                 cur = cur.right
             else:
-                TreeNode = prev = cur.left
+                prev = cur.left
                 while prev.right and prev.right != cur:
-                    prev = prev.right 
+                    prev = prev.right
                 if prev.right is None:
                     prev.right = cur
                     cur = cur.left
-                else: 
+                else:
                     prev.right = None
                     array.append(cur.val)
                     cur = cur.right
         return array
+                
+
+
         
