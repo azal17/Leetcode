@@ -4,17 +4,24 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        cur = root
         array = []
-        self.inorder(root, array)
+        while cur :
+            if cur.left is None:
+                array.append(cur.val)
+                cur = cur.right
+            else:
+                TreeNode = prev = cur.left
+                while prev.right and prev.right != cur:
+                    prev = prev.right 
+                if prev.right is None:
+                    prev.right = cur
+                    cur = cur.left
+                else: 
+                    prev.right = None
+                    array.append(cur.val)
+                    cur = cur.right
         return array
-    
-    def inorder(self, root: Optional[TreeNode], a: List[int]) -> None:
-        if root is None:
-            return
-        self.inorder(root.left, a)  
-        a.append(root.val)          
-        print(root.val)         
-        self.inorder(root.right, a) 
+        
