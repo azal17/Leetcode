@@ -1,5 +1,5 @@
 #User function Template for python3
-from collections import deque
+from collections import deque, defaultdict
 class Solution:
     def bottomView(self, root):
         
@@ -8,7 +8,7 @@ class Solution:
             return []
 
         q = deque([(root, 0)])  
-        mpp = {}  
+        mpp = defaultdict()  
         while q:
             node, line = q.popleft()
             mpp[line] = node.data 
@@ -19,7 +19,7 @@ class Solution:
 
         result = []
         for key in sorted(mpp.keys()):
-            result.append(mpp[key])  
+            result.append(mpp[key])
         return result
 
 #{ 
