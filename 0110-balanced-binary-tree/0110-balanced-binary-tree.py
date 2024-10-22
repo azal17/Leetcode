@@ -8,18 +8,18 @@ class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         if root is None:
             return True
-        lh = self.ht(root.left)
-        rh = self.ht(root.right)
-    
-        if abs(lh - rh) > 1:
-            return False
         
-        return self.isBalanced(root.left) and self.isBalanced(root.right)
-    
+        if self.ht(root) != -1:
+            return True
+        return False
     def ht(self, root):
         if root is None:
-            return 0  
-        lh = self.ht(root.left)
-        rh = self.ht(root.right)
-
+            return 0
+        lh , rh = self.ht(root.left), self.ht(root.right)
+        if lh == -1 or rh == -1:
+            return -1
+        if abs(lh - rh) > 1:
+            return -1
         return max(lh, rh) + 1
+
+        
