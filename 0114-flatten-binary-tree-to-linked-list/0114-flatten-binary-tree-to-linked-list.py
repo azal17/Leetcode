@@ -9,16 +9,16 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        prev = None
-        def helper(node):
-            nonlocal prev
-            if node is None:
-                return
-            helper(node.right)
-            helper(node.left)
+        if not root:
+            return
 
-            node.right = prev
-            node.left = None
-            prev = node
-        
-        helper(root)
+        stack = [root]
+        while stack:
+            cur = stack.pop()
+            if cur.right:
+                stack.append(cur.right)
+            if cur.left:
+                stack.append(cur.left)
+            if stack:
+                cur.right = stack[-1]
+            cur.left = None
