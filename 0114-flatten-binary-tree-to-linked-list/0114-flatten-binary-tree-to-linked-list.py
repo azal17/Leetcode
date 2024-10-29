@@ -9,16 +9,13 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        if not root:
-            return
-
-        stack = [root]
-        while stack:
-            cur = stack.pop()
-            if cur.right:
-                stack.append(cur.right)
-            if cur.left:
-                stack.append(cur.left)
-            if stack:
-                cur.right = stack[-1]
-            cur.left = None
+        node = root
+        while node:
+            if node.left:
+                prev = node.left
+                while prev.right:
+                    prev = prev.right 
+                prev.right = node.right 
+                node.right = node.left    
+                node.left = None           
+            node = node.right  
