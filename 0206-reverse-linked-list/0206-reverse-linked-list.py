@@ -10,18 +10,12 @@ class Solution(object):
             self.next = next
     def reverseList(self, head):
         q = head
-        stack =[]
+
+        prev = None
 
         while q is not None:
-            stack.append(q.val)
-            q = q.next
-        q = head
-        while q is not None:
-            q.val = stack.pop()
-            q = q.next
-
-        return head
-
-            
-        
-        
+            front = q.next
+            q.next = prev
+            prev = q
+            q = front
+        return prev
