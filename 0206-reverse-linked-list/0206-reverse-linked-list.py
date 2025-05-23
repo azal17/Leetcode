@@ -8,13 +8,20 @@ class Solution(object):
         def __init__(self, val =0, next = None):
             self.val = val
             self.next = next
-
     def reverseList(self, head):
-        if head is None or head.next is None:
-            return head
+        q = head
+        stack =[]
 
-        new_head = self.reverseList(head.next)
-        head.next.next = head
-        head.next = None
+        while q is not None:
+            stack.append(q.val)
+            q = q.next
+        q = head
+        while q is not None:
+            q.val = stack.pop()
+            q = q.next
 
-        return new_head
+        return head
+
+            
+        
+        
