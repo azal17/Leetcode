@@ -14,3 +14,13 @@ def rr1(head):
         return
     rr1(head.next)
     print(head.val)
+
+# Stack implementation, O(n) both.
+def rr2(head):
+    stack = []
+    q = head
+    while q:
+        stack.append(q.val)
+        q = q.next
+    while stack:
+        print(stack.pop())
